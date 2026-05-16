@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
 import pinyin
+from parser import load_dictionary
 
 load_dotenv()
 
@@ -22,8 +23,14 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-class ReqBody(BaseModel):
+# Load dictionary at startup
+dictionary = load_dictionary()
+
+class TranslateReqBody(BaseModel):
   name: str
+
+class SearchReqBody(BaseModel):
+  pinyin: str
 
 @app.get("/")
 def root():
@@ -34,7 +41,7 @@ def hello(name: str):
   return {"message": f"Hello, {name}!"}
 
 @app.post("/translate")
-def translate(body: ReqBody):
+def translate(body: TranslateReqBody):
   client = InferenceClient(
     api_key=os.environ["HF_TOKEN"],
   )
@@ -56,5 +63,9 @@ def translate(body: ReqBody):
   characters = completion.choices[0].message.content
   pinyinTranslation = pinyin.get(characters, delimiter=" ")
 
-  test = body.name + " poggers"
   return {"characters": characters, "pinyin": pinyinTranslation}
+
+@app.post("/search")
+def search(body: SearchReqBody):
+  results = [entry for entry in dictionary if entry['pinyin'] == body.pinyin]
+  return results
