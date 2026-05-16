@@ -1,0 +1,10 @@
+<form (ngSubmit)="onFind()">
+  <div class="input-group">
+    <input type="text" required [(ngModel)]="inputName" name="inputName" placeholder="Enter your name (e.g. David, Sophia)">
+    <button type="submit">Find</button>
+  </div>
+</form>
+
+@if (thinking()) {
+  <p class="loading">thinking...</p>
+}

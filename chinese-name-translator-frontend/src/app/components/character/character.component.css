@@ -1,0 +1,8 @@
+.character-card {
+  /* border: 2px solid red; */
+  padding: 2em;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

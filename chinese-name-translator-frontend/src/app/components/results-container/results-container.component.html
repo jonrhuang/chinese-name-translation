@@ -1,0 +1,15 @@
+<div class="results-container">
+  @if (cards.length > 0) {
+    @for (card of cards; track card.id) {
+      <div class="card" (click)="onCardClick(card)">
+        <p>English: {{ card.name }}</p>
+        <p>PinYin: {{ card.pinyin }}</p>
+        <p>Characters: {{ card.characters }}</p>
+      </div>
+    }
+  } @else {
+    <div class="results-placeholder">
+      <p>No searches yet</p>
+    </div>
+  }
+</div>

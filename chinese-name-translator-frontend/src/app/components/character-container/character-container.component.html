@@ -1,0 +1,14 @@
+<div class="character-container">
+  @if (selectedCard()) {
+    <p>Click to show strokes</p>
+    @for (charCard of selectedCard(); track charCard.character) {
+      <div class="large-character">
+        <app-chinese-char [pinyin]="charCard.pinyin" [character]="charCard.character"></app-chinese-char>
+      </div>
+    }
+  } @else {
+    <div class="panel-placeholder">
+      <p>Select a card to view characters</p>
+    </div>
+  }
+</div>

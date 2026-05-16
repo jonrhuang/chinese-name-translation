@@ -1,0 +1,14 @@
+<main class="main">
+  <div class="title">
+    <h1> Ink & Name</h1>
+    <p>Discover your name in Chinese Calligraphy</p>
+
+    <app-search-form (onSearch)="onFind($event)"></app-search-form>
+  </div>
+
+  <div class="content-wrapper">
+    <results-container [cards]="cards()" (cardClicked)="onCardClick($event)"></results-container>
+
+    <app-character-container [selectedCard]="selectedCard()"></app-character-container>
+  </div>
+</main>
