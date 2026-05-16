@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo MAKE SURE TO SOURCE THE VENV IN THE BACKEND DIRECTORY FIRST
+
+# Get the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Start backend server in background
+echo "Starting backend server..."
+(cd "$SCRIPT_DIR/chinese-name-translator-backend" && . start-server) &
+BACKEND_PID=$!
+
+# Start frontend in foreground
+echo "Starting frontend server..."
+cd "$SCRIPT_DIR/chinese-name-translator-frontend" && npm run start
+
+# Kill backend when frontend is stopped (Ctrl+C)
+kill $BACKEND_PID 2>/dev/null
