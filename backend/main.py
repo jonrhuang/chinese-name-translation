@@ -68,7 +68,15 @@ def translate(body: TranslateReqBody):
     messages=[
       {
         "role": "system",
-        "content": "Your job is to translate a name from another language such as english to chinese simplified characters. You will answer with just the name and nothing else. You will first look for an existing translation of any famous person with the same or phonetically similar name and return that name. If there is none, you will return the closest phonetically similar name to the input name."
+        "content": (
+          "Your job is to translate a name from another language "
+          "such as english to chinese simplified characters. "
+          "You will answer with just the name and nothing else. "
+          "You will first look for an existing translation of any "
+          "famous person with the same or phonetically similar name "
+          "and return that name. If there is none, you will return "
+          "the closest phonetically similar name to the input name."
+        )
       },
       {
         "role": "user",
