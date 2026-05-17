@@ -25,7 +25,7 @@ def load_dictionary():
         line = line.split('/')
         if len(line) <= 1:
             return 0
-        english = line[1]
+        english = line[1:4]
         char_and_pinyin = line[0].split('[')
         characters = char_and_pinyin[0]
         characters = characters.split()
@@ -52,8 +52,8 @@ def load_dictionary():
         parse_line(line)
 
     # Remove entries for surnames from the data (optional)
-    print("Removing Surnames . . .")
-    remove_surnames()
+    # print("Removing Surnames . . .")
+    # remove_surnames()
 
     print('Done!')
     return list_of_dicts

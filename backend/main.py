@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
 import pinyin
 from parser import load_dictionary
+import re
+from collections import defaultdict
 
 load_dotenv()
 
@@ -17,7 +19,10 @@ app = FastAPI(
 
 app.add_middleware(
   CORSMiddleware,
-  allow_origins=["http://127.0.0.1:4200"], 
+  allow_origins=[
+    "http://127.0.0.1:4200", 
+    "http://localhost:4200"
+  ], 
   allow_credentials=False,
   allow_methods=["*"],
   allow_headers=["*"],
@@ -26,11 +31,23 @@ app.add_middleware(
 # Load dictionary at startup
 dictionary = load_dictionary()
 
+pinyin_lookup = defaultdict(list)
+
+def strip_tones(pinyin_text: str):
+  return re.sub(r'\d', '', pinyin_text).lower()
+
+for entry in dictionary:
+  stripped = strip_tones(entry["pinyin"])
+
+  pinyin_lookup[stripped].append({
+    "simplified": entry["simplified"],
+    "traditional": entry["traditional"],
+    "pinyin": entry["pinyin"],
+    "english": entry["english"]
+  })
+
 class TranslateReqBody(BaseModel):
   name: str
-
-class SearchReqBody(BaseModel):
-  pinyin: str
 
 @app.get("/")
 def root():
@@ -62,10 +79,14 @@ def translate(body: TranslateReqBody):
 
   characters = completion.choices[0].message.content
   pinyinTranslation = pinyin.get(characters, delimiter=" ")
+  number = len(characters)
 
-  return {"characters": characters, "pinyin": pinyinTranslation}
+  return \
+  {
+    "characters": characters, 
+    "pinyin": pinyinTranslation,
+    "number": number,
 
-@app.post("/search")
-def search(body: SearchReqBody):
-  results = [entry for entry in dictionary if entry['pinyin'] == body.pinyin]
-  return results
+  }
+
+  # results = [entry for entry in dictionary if entry['pinyin'] == body.pinyin]
