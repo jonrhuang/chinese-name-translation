@@ -6,11 +6,11 @@
 
 #Characters that are commonly used as surnames have two entries in CC-CEDICT. This program will remove the surname entry if there is another entry for the character. If you want to include the surnames, simply delete lines 59 and 60.
 
-#This code was written by Franki Allegra in February 2020.
+# Portions of this code was written by Franki Allegra in February 2020. Modified by Jonathan Huang 2026
 
 def load_dictionary():
     """Load and parse the CC-Cedict dictionary file."""
-    with open('cedict_ts.u8') as file:
+    with open('cedict_ts.u8', encoding='utf-8') as file:
         text = file.read()
         lines = text.split('\n')
         dict_lines = list(lines)
@@ -19,32 +19,53 @@ def load_dictionary():
 
     def parse_line(line):
         parsed = {}
+
         if line == '':
             return 0
+
         line = line.rstrip('/')
         line = line.split('/')
+
         if len(line) <= 1:
             return 0
-        english = line[1:4]
+
+        definition = [d.lower() for d in line[1:4]]
+
         char_and_pinyin = line[0].split('[')
-        characters = char_and_pinyin[0]
-        characters = characters.split()
+        characters = char_and_pinyin[0].split()
+
+        if len(characters) < 2:
+          return
+
         traditional = characters[0]
         simplified = characters[1]
+
         pinyin = char_and_pinyin[1]
-        pinyin = pinyin.rstrip()
-        pinyin = pinyin.rstrip("]")
+        pinyin = pinyin.rstrip().rstrip("]").lower()
+
         parsed['traditional'] = traditional
         parsed['simplified'] = simplified
         parsed['pinyin'] = pinyin
-        parsed['english'] = english
+        parsed['definition'] = definition
+
         list_of_dicts.append(parsed)
 
     def remove_surnames():
-        for x in range(len(list_of_dicts)-1, -1, -1):
-            if "surname " in list_of_dicts[x]['english']:
-                if list_of_dicts[x]['traditional'] == list_of_dicts[x+1]['traditional']:
-                    list_of_dicts.pop(x)
+      nonlocal list_of_dicts
+
+      filtered_entries = []
+
+      for entry in list_of_dicts:
+        entry["definition"] = [
+          defi
+          for defi in entry["definition"]
+          if "surname" not in defi.lower()
+        ]
+
+        if len(entry["definition"]) > 0:
+          filtered_entries.append(entry)
+      
+      list_of_dicts = filtered_entries
 
     # Parse each line into a dictionary
     print("Parsing dictionary . . .")
@@ -52,8 +73,8 @@ def load_dictionary():
         parse_line(line)
 
     # Remove entries for surnames from the data (optional)
-    # print("Removing Surnames . . .")
-    # remove_surnames()
+    print("Removing Surnames . . .")
+    remove_surnames()
 
     print('Done!')
     return list_of_dicts
