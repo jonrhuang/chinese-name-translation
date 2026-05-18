@@ -7,12 +7,12 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Start backend server in background
 echo "Starting backend server..."
-(cd "$SCRIPT_DIR/chinese-name-translator-backend" && . start-server) &
+(cd "$SCRIPT_DIR/backend" && . start-server) &
 BACKEND_PID=$!
 
 # Start frontend in foreground
 echo "Starting frontend server..."
-cd "$SCRIPT_DIR/chinese-name-translator-frontend" && npm run start
+cd "$SCRIPT_DIR/frontend" && npm run start
 
 # Kill backend when frontend is stopped (Ctrl+C)
 kill $BACKEND_PID 2>/dev/null
