@@ -1,21 +1,22 @@
-<div class="character-container">
-  @if (selectedCardWriter()) {
-    <p>Click to show strokes</p>
-    @for (charCard of selectedCardWriter(); track charCard.id + $index) {
+<div class="edit-container">
+  @if (selectedCharWriter()) {
+    <p>Choose a new character</p>
+    @for (charCard of selectedCharWriter(); track charCard.character + $index) {
       <div class="large-character">
         <chinese-character 
           [pinyin]="charCard.pinyin" 
           [character]="charCard.character" 
           [definitions]="charCard.definitions"
-          [button]="'Change'"
+          [button]="'Select'"
           [index]="$index"
           (changeCharacter)="changeCharacter.emit($event)">
         </chinese-character>
       </div>
     }
-  } @else {
-    <div class="panel-placeholder">
-      <p>Select a card to view characters</p>
+  }
+  @else {
+    <div class="edit-placeholder">
+      <p>Select a character to edit</p>
     </div>
   }
 </div>

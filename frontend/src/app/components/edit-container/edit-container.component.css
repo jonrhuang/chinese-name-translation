@@ -1,0 +1,36 @@
+.edit-container {
+  border: 1px solid #ccc;
+  border-radius: 0.8em;
+  padding: 2em;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 1.5em;
+  overflow-y: scroll;
+  max-height: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-container > p {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.large-character {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.edit-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  font-size: 1.1em;
+  text-align: center;
+}

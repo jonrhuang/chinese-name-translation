@@ -1,8 +1,37 @@
 .character-card {
-  /* border: 2px solid red; */
-  padding: 2em;
   cursor: pointer;
   display: flex;
+  padding: 0 2em 0;
   flex-direction: column;
   align-items: center;
+}
+
+.character-card > h2 {
+  margin-bottom: 0;
+}
+
+.character-card > p {
+  margin-top: 0;
+  align-self: left;
+}
+
+.character-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  background-color: #52c4fd;
+  border-radius: 5px;
+  border: 1px black solid;
+  margin-bottom: 2em;
+  height: 2em;
+}
+
+.character-edit:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.fallback {
+  font-size: 120px;
 }

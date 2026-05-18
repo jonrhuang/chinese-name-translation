@@ -1,11 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-export interface Card {
-  id: number;
-  name: string;
-  pinyin: string;
-  characters: string;
-}
+import { Card } from '../../app';
 
 @Component({
   selector: 'results-container',
@@ -14,6 +8,7 @@ export interface Card {
 })
 export class ResultsContainerComponent {
   @Input() cards: Card[] = [];
+  @Input() selectedCardId: number = 0;
   @Output() cardClicked = new EventEmitter<Card>();
 
   onCardClick(card: Card): void {

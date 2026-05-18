@@ -4,6 +4,7 @@ body {
   background-color: #f4f1ea;
   display: flex;
   justify-content: center;
-  color: #333;
-  border: 2px red solid;
+  align-items: center;
+  color: hsl(0, 0%, 20%);
+  margin: 2em 5em;
 }

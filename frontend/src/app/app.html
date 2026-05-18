@@ -7,8 +7,10 @@
   </div>
 
   <div class="content-wrapper">
-    <results-container [cards]="cards()" (cardClicked)="onCardClick($event)"></results-container>
+    <results-container [cards]="cards()" [selectedCardId]="selectedCardId" (cardClicked)="onCardClick($event)"></results-container>
 
-    <app-character-container [selectedCard]="selectedCard()"></app-character-container>
+    <app-character-container [selectedCardWriter]="selectedCardWriter()" (changeCharacter)="changeCharacter($event)"></app-character-container>
+
+    <edit-container [selectedCharWriter]="changeOptions()" (changeCharacter)="editCharacter($event)"></edit-container>
   </div>
 </main>

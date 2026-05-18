@@ -1,10 +1,10 @@
 <div class="results-container">
   @if (cards.length > 0) {
     @for (card of cards; track card.id) {
-      <div class="card" (click)="onCardClick(card)">
+      <div class="card" [class.active]="selectedCardId === card.id" (click)="onCardClick(card)">
         <p>English: {{ card.name }}</p>
         <p>PinYin: {{ card.pinyin }}</p>
-        <p>Characters: {{ card.characters }}</p>
+        <p>Characters: {{ card.translation }}</p>
       </div>
     }
   } @else {

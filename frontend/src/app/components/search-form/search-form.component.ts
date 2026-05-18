@@ -1,4 +1,4 @@
-import { Component, signal, output } from '@angular/core';
+import { Component, input, signal, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './search-form.component.css'
 })
 export class SearchFormComponent {
+  // err = input<boolean>(false);
   inputName = signal('');
   thinking = signal(false);
   

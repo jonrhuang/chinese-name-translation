@@ -1,4 +1,12 @@
 <div class="character-card" (click)="onClick()">
   <h2>{{ pinyin }}</h2>
-  <div #writerTarget (click)="onClick()"></div>
+  <p>{{ definitions }}</p>
+  @if (hasStrokeData) {
+    <div #writerTarget></div>
+  }
+  @if (hasStrokeData === false) {
+    <i style="margin: 0;">No animation available</i>
+    <div class="fallback">{{character}}</div>
+  }
 </div>
+<button class="character-edit" (click)="onButtonClick()">{{button}}</button>
